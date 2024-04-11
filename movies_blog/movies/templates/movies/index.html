@@ -1,7 +1,20 @@
-{% extends "movies/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <h1>영화 블로그 프로젝트 메인 페이지</h1>
 <h3>영화 블로그 내용을 관리합니다.</h3>
-<p><a href='add_movie'>영화 추가</a></p>
+<h3>
+<ui>
+    <li>
+        {% if request.GET %}
+        <a href='{% url "movies:movie_info" add_movie_name %}'>
+            {{ add_movie_name }} 
+        </a>
+        {% else %}
+        영화가 없습니다.
+        {% endif %}
+    </li>
+</ui>
+</h3>
+<p><a href='{% url "movies:add_movie" %}'>영화 추가</a></p>
 {% endblock content %}

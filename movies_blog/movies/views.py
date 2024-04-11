@@ -21,4 +21,12 @@ def submit_movie(request):
         'add_movie_name': data.get('movie_name')
     }
 
-    return render(request, 'movies/add_result_movie.html', content)
+    return render(request, 'movies/index.html', content)
+
+def movie_info(request, movie):
+    # data = request.GET
+    print('test:' , movie)
+    content = {
+        'movie': movie,
+    }
+    return render(request, 'movies/movie_info.html', content)

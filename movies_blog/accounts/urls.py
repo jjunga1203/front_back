@@ -1,5 +1,5 @@
 """
-URL configuration for movie_blog2 project.
+URL configuration for movies_blog project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from movies import views
+from . import views
+app_name = 'accounts'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('movies/', views.index),
+    path('', views.login, name='login'),
+    # path('accounts/', views.login, name='login'),
+    path('login/', views.login, name='login'),
+    path('login_submit/', views.login_submit, name='login_submit'),
+    
 ]
