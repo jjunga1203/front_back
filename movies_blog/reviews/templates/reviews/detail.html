@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>리뷰 상세보기 입니다.</h2>
+<hr>{{form.pk}} 번째 리뷰<hr>
+<p>작성자 : {{ form.user }}</p>
+<p>리뷰 영화 : {{ form.movie_title }}</p>
+<p>리뷰 제목 : {{ form.title }}</p>
+<p>리뷰 내용 : {{ form.content }}</p>
+<p>리뷰 작성 시간 : {{ form.created_at }}</p>
+<p>최근 리뷰 업데이트 시간 : {{ form.updated_at }}</p>
+
+{% if form.user == request.user %}
+<hr>
+<a href="{% url "reviews:edit" review_pk=form.pk %}">[EDIT]</a>
+<a href="{% url "reviews:delete" review_pk=form.pk %}">[DELETE]</a>
+<a href="{% url "reviews:index" %}">[BACK]</a>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<hr>
+<form action="{% url "reviews:create_comment" pk=form.pk %}" method='POST'>
+    {% csrf_token %}
+    {{ comment_form }}
+
+    <input type="submit" value='댓글 작성하기'>
+</form>
+{% endif %}
+<hr>
+<h3>댓글 목록 ({{ comments | length}})</h3>
+{% if comments %}
+    {% for comment in comments %}
+        <ol>
+            <li>
+                {{comment.user}} : {{comment.content}}
+                <form action="{% url "reviews:delete_comment" review_id=form.pk comment_id=comment.id %}" method='POST'>
+                    {% csrf_token %}
+                    <input type="submit" value='댓글 삭제하기'>
+                </form>
+            </li>
+        </ol>
+    {% endfor %}
+{% else %}
+댓글이 없습니다.
+{% endif %}
+
+
+{% endblock content %}
+
+
+

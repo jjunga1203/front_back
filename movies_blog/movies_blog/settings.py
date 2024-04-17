@@ -26,13 +26,15 @@ SECRET_KEY = 'django-insecure-8tw&*er3k&ert_ant)&hcqly&-n@_d%w20de_z6qrunt++&az5
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+STATIC_URL = 'static/'
 
 # Application definition
 
 INSTALLED_APPS = [
     'movies',
     'accounts',
+    'reviews',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +71,10 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 WSGI_APPLICATION = 'movies_blog.wsgi.application'
 
 
@@ -86,6 +92,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'accounts.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

@@ -3,12 +3,11 @@
 {% block content %}
 <h2>로그인 페이지</h2>
 
-<form action='{% url "accounts:login_submit" %}' method='GET'>
-    <input type='text' name='login_id' placeholder='아이디'>
-    <input type='password' name='login_pw' placeholder='비밀번호'>
-    <input type='submit' value='login'>
+<form action='{% url "accounts:login" %}' method='POST'>
+    {% csrf_token %}
+    {{ form }}
+    <input type='submit' value='로그인하기'>
 </form>
-
 
 {% endblock content %}
 

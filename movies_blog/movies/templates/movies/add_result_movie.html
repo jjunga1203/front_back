@@ -3,5 +3,7 @@
 {% block content %}
 <h1>영화 블로그 프로젝트 </h1>
 {{movie_name}}
-<p><a href='{% url "movies:index" %}'>메인 페이지</a></p>
+<p><a href='{% url "movies:index" %} 
+    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"'>
+    메인 페이지</a></p>
 {% endblock content %}

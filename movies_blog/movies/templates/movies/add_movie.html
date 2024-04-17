@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>이 곳에서 영화를 생성합니다.</h1>
-<form action='{% url "movies:submit_movie" %}' method='GET'>
-    <input type='text' name='movie_name'>
-    <input type='submit' value='submit'>
+<h2>이 곳에서 영화를 생성합니다.</h2>
+<form action='{% url "movies:create_movie" %}' method='POST'>
+    {% csrf_token %}
+    <p>영화제목 : <input type='text' name='movie_name'></p>
+    <p>상세내용 : <textarea name="content" cols="30" rows="5"></textarea></p>
+    <input type="checkbox" name="isopen" id="isopen" checked>
+    <label for="isopen">개봉여부</label>&nbsp;&nbsp;&nbsp;
+    <input type="submit"  value='등록'>
 </form>
-<p><a href='{% url "movies:index" %}'>메인 페이지</a></p>
+<hr>
+<a href='{% url "movies:index" %}' 
+    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"> 
+    [메인 페이지]</a>
 {% endblock content %}

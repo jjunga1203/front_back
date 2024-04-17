@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br>
+    <a href="{% url 'reviews:create' %}">리뷰 작성하기</a>
+    <h2>리뷰 목록</h2>
+    <ul>
+        {% for review in reviews %}
+          <li>
+            <p>작성일 : 작성 시간 출력하기</p>
+            <p>영화 제목 : {{ review.movie_title }}</p>
+            <a href="{% url "reviews:detail" review_idx=review.pk %}">리뷰 제목  : {{ review.review_title }}</a>
+            <p>리뷰 내용: {{ review.review_content }}</p>
+          </li>
+          <hr>
+        {% empty %}
+          <li>작성된 리뷰가 없습니다.</li>
+        {% endfor %}
+      </ul>
+{% endblock content %}
+

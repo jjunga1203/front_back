@@ -20,9 +20,13 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-    path('', views.login, name='login'),
-    # path('accounts/', views.login, name='login'),
+    path('index/', views.index, name='index'),
+    path('', views.index, name='index'),
     path('login/', views.login, name='login'),
-    path('login_submit/', views.login_submit, name='login_submit'),
-    
+    path('logout/', views.logout, name='logout'),
+    path('signup/', views.signup, name='signup'),
+    path('delete/', views.delete, name='delete'),
+    path('update/', views.update, name='update'),
+    path('profile/<str:username>', views.profile, name='profile'),
+    path('follow/<int:user_id>/', views.follow, name='follow'),
 ]

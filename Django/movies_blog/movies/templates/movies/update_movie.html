@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>이 곳에서 영화 정보를 수정합니다.</h1>
+
+  <form action="{% url "movies:edit_movie" movie.pk %}" method="POST">
+    {% csrf_token %}
+    <label for="movie_title">work : </label>
+    <input type="text" name="movie_title" id="movie_title" value="{{ movie.title }}"> <br>
+    <label for="movie_content">content : </label>
+    <textarea name="movie_content" id="movie_content" cols="30" rows="10">{{ movie.content }}</textarea>
+    <input type="submit" value="수정">
+  </form>
+{% endblock content %}

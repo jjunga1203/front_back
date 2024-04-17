@@ -1,20 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>영화 블로그 프로젝트 메인 페이지</h1>
-<h3>영화 블로그 내용을 관리합니다.</h3>
-<h3>
-<ui>
-    <li>
-        {% if request.GET %}
-        <a href='{% url "movies:movie_info" add_movie_name %}'>
-            {{ add_movie_name }} 
-        </a>
-        {% else %}
-        영화가 없습니다.
-        {% endif %}
-    </li>
-</ui>
-</h3>
-<p><a href='{% url "movies:add_movie" %}'>영화 추가</a></p>
+<h2>영화 블로그 프로젝트 메인 페이지</h2>
+<p>영화 블로그 내용을 관리합니다.</p>
+<ul>
+    {% if movies %}
+        {% for movie in movies %}
+        <li>
+            <p><a href='{% url "movies:movie_info" movie_pk=movie.pk %}' 
+            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+            영화제목 : {{ movie.title }}</a><br>
+            작성자 : {{ movie.user }} <br>
+            {% if movie.is_open %}
+                개봉여부 : <input type="checkbox" name="isopen" checked disabled/>
+            {% else %}
+                개봉여부 : <input type="checkbox" name="isopen" disabled/>
+            {% endif %}</p>
+        </li>
+        {% endfor %}
+    {% else %}
+    영화가 없습니다.
+    {% endif %}
+
+</ul>
+<hr>
+{% comment %} <p><a href='{% url "movies:create_new" %}' 
+    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">[영화 추가]</a></p> {% endcomment %}
 {% endblock content %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>영화 블로그 프로젝트 메인 페이지</h1>
+<p>영화 블로그 내용을 관리합니다.</p>
+<ul>
+  {% for movie in movie_list %}
+  <li>
+    <a href="{% url "movies:movie_detail" movie.pk %}">{{ movie.title }}</a>
+    <p>개봉여부:       
+      {% comment %} {% if movie.is_open %}
+        개봉 완료
+      {% else %}
+        개봉 전
+      {% endif %}</p> {% endcomment %}
+      <input type="checkbox" value="{{ movie.is_open }}" {% if movie.is_open %}checked{% endif %}>
+  </li>
+{% empty %}
+  <li>영화가 없습니다.</li>
+{% endfor %}
+
+  {% comment %} {% if movie %}
+    <li><a href="/movies/{{ movie }}">{{ movie }}</a></li>
+  {% else %}
+    <li>영화가 없습니다.</li>
+  {% endif %} {% endcomment %}
+</ul>
+<a href="/movies/create_movie/">영화 추가</a>
+{% endblock content %}

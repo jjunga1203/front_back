@@ -1,0 +1,7 @@
+1. DB 연결 (movies_blog 만들기 (db)
+2. .model.py 만들기, setting 파일에 AUTH_USER_MODEL = 'accounts.User' 추가
+3. makemigrations => migrate
+4. admin.py 생성하여 등록 => python manage.py createsuperuser
+
+ => signup.html 만들때,
+반드시!! forms.py 에 CustomUserCreationForm  클래스 상속받아와서 수정해야 함.

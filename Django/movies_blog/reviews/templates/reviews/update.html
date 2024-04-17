@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>리뷰 수정 페이지</h1>
+    <form action="{% url "reviews:update" review_idx=review.pk%}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="수정 완료">
+    </form>
+{% endblock content %}

@@ -1,0 +1,21 @@
+<!-- templates/reviews/detail.html-->
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>리뷰 상세보기</h2>
+    <h3>{{ review.pk }} 번째 리뷰</h3>
+    <hr>
+    <p>영화제목: {{ review.movie_title }}</p>
+    <p>리뷰제목: {{ review.review_title }}</p>
+    <p>리뷰내용: {{ review.review_content }}</p>
+    <p>리뷰 작성 시간: 생성시간이 나타나도록 하세요</p>
+    <p>최근 리뷰 업데이트 시간 : 업데이트 시간이 나타나도록 하세요.</p>
+    <hr>
+    <a href="{% url 'reviews:update' review_idx=review.pk %}">[리뷰 수정하기]</a>
+    <br>
+    <a href="{% url 'reviews:delete' review_idx=review.pk %}" class="review-delete-btn">[리뷰 삭제하기]</a>
+    <br>
+    <a href="{% url 'reviews:index' %}">[리뷰 목록 보러가기]</a>  
+{% endblock content %}
+
+

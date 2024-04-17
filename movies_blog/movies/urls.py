@@ -20,12 +20,15 @@ from . import views
 app_name = 'movies'
 
 urlpatterns = [
-
     path('movies/', views.index, name='index'),
     path('', views.index, name='index'),
-    path('add_movie/', views.add_movie, name='add_movie'),
-    path('submit_movie/', views.submit_movie, name='submit_movie'),
-    path('<str:movie>', views.movie_info, name='movie_info'),
-    # path('movie_info/', views.movie_info, name='movie_info'),
-    # path('<str:movie>', views.movie_detail, name="movie_detail"),
+    path('create_new/', views.create_new, name='create_new'),
+    path('save/', views.save, name='save'),
+    # path('create_movie/', views.create_movie, name='create_movie'),
+    path('movie_info/<int:movie_pk>', views.movie_info, name='movie_info'),
+    path('delete_movie/<int:movie_pk>', views.delete_movie, name='delete_movie'),
+    path('edit_movie/<int:movie_pk>', views.edit_movie, name='edit_movie'),
+    path('create_comment/<int:pk>', views.create_comment, name='create_comment'),
+    path('<int:movie_id>/comments/<int:comment_id>/delete/', 
+         views.delete_comment, name='delete_comment'),
 ]

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h2>이 곳에서 영화를 수정합니다.</h2>
+<form action='{% url "movies:edit" movie_pk=movie.pk %}' method='POST'>
+    {% csrf_token %}
+    {{ form }}
+    {% if movie.is_open %}
+    <input type="checkbox" id="isopen" name="isopen" checked >
+    {% else %}
+    <input type="checkbox" id="isopen" name="isopen">
+    {% endif %}
+    <label for="isopen">개봉여부</label> &nbsp;&nbsp;&nbsp;
+    <input type="submit" value='수정'>
+</form>
+<hr>
+<p><a href='{% url "movies:index" %}' 
+    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">[메인 페이지]</a></p>
+{% endblock content %}

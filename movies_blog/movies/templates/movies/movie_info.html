@@ -1,9 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>
-{{ movie }} 
-영화 상세 페이지
-</h3>
+<h2>영화 상세 페이지</h2>
+<hr>
+<p>{{ movie.pk}} 번째 영화 </p>
+<p>작성자 : {{ movie.user }}</p>
+<p>영화 제목 : {{ movie.title }}</p>
+<p>영화 콘텐츠 : {{ movie.content }}</p>
+<p>영화 제작일 : {{ movie.created_at }}</p>
+<p>영화 개봉 여부 : {{ movie.is_open}} </p>
+<hr>
+{% comment %} 글 작성자만 수정/삭제 하도록 {% endcomment %}
+{% if request.user == movie.user %}
+    <a href="{% url "movies:edit_movie" movie_pk=movie.pk %}" 
+    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+    [수정]</a> | 
+    <a href="{% url "movies:delete_movie" movie_pk=movie.pk %}" 
+    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+    [삭제]</a>
+    <hr>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+    <form action="{% url "movies:create_comment" pk=movie.pk %}" method='POST'>
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit" value='댓글작성하기'>
+    </form>
+
+    <hr>
+{% endif %}
+
+<h3>댓글 목록 ({{comments|length }})</h3>
+<ol>
+    {% if comments %}
+        {% for comment in comments %}
+            <li> 
+                {{ comment.user }} : {{ comment.content}} 
+                <form action="{% url "movies:delete_comment" movie_id=movie.pk comment_id=comment.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value='댓글 삭제하기'>
+                </form>
+            </li>
+        {% endfor %}
+    {% else %}
+        <div>댓글이 없습니다.</div>
+    {% endif %}
+
+</ol>
 {% endblock content %}
 

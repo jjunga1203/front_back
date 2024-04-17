@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>회원정보 페이지</h2>
+<hr>
+<h3>계정이름 : {{ user.username }} </h3>
+<h3>이메일 : {{ user.email }} </h3>
+<hr>
+<h3>작성한 리뷰 목록</h3>
+<ol>
+{% if reviews %}
+    {% for review in reviews %}
+        <li><a href='{% url "reviews:detail" review.pk %}'>리뷰 제목: {{ review.title }}</a></li>
+    {% endfor %}
+{% else %}
+작성한 리뷰가 없습니다.
+{% endif %}
+</ol>
+
+
+<hr>
+<h3>작성한 리뷰댓글 목록</h3>
+<ol>
+{% if comments %}
+    {% for comment in comments %}
+        <li><a href='{% url "reviews:detail" comment.review.id %}'>댓글: {{ comment.content }}</a></li>
+    {% endfor %}
+{% else %}
+작성한 리뷰 댓글이 없습니다.
+{% endif %}
+</ol>
+
+
+{% if user.is_authenticated %}
+<form action="{% url "accounts:logout" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value='로그아웃하기'>
+</form>
+<form action="{% url "accounts:delete" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value='회원탈퇴하기'>
+</form>
+<form action="{% url "accounts:update" %}" >
+    {% csrf_token %}
+    <input type="submit" value='회원정보수정'>
+</form>
+{% else %}
+<h3>로그인 후 사용하세요.</h3>
+<form action="{% url "accounts:login" %}">
+    {% csrf_token %}
+    <input type="submit" value='로그인하기'>
+</form>
+{% endif %}
+{% endblock content %}

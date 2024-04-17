@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>리뷰페이지 입니다.</p>
+{% if reviews %}
+    {% for review in reviews %}
+    <ul>
+        <li>
+            <p>작성일: {{review.created_at}}</p>
+            <p>작성자: {{review.user}}</p>
+            <p>영화 제목: {{review.movie_title}}</p>
+            <p><a href="{% url "reviews:detail" review_pk=review.pk %}">
+                리뷰 제목: {{review.title}} ({{review.review_comments.all|length}})</a></p>
+            <p>리뷰 내용: {{review.content}}</p>
+            <form action="{% url "reviews:review_like" review_id=review.pk %}" method='POST'>
+                {% csrf_token %}
+                {% if request.user in review.like_users.all %}
+                <input type="submit" value='좋아요 취소하기'>
+                {% else %}
+                <input type="submit" value='좋아요'>
+                {% endif %}
+            </form>
+        </li>
+    </ul>
+    {% endfor %}
+{% else %}
+    등록된 리뷰가 없습니다.
+{% endif %}
+{% comment %} <hr>
+<a href="{% url "reviews:create" %}">[리뷰 작성하기]</a> {% endcomment %}
+{% endblock content %}
+
+ 

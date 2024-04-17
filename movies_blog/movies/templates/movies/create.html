@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>이 곳에서 영화를 생성합니다.</h2>
+<form action='{% url "movies:save" %}' method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit"  value='등록'>
+</form>
+<hr>
+<a href='{% url "movies:index" %}' 
+    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"> 
+    [메인 페이지]</a>
+{% endblock content %}

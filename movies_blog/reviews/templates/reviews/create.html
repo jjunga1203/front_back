@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{% url "reviews:create" %}" method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type='submit' value='제출'>
+</form>
+<hr>
+<a href="{% url 'reviews:index' %}">[리뷰보기]</a>
+{% endblock content %}
+
+

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>영화 블로그 프로젝트</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <a href="/movies/">[MAIN]</a> | 
+  <a href="/movies/create_movie">[CRAETE]</a>
+  <a href="/reviews/">[REVIEWS]</a>
+  <a href="/accounts/login">[LOGIN]</a>
+  {% block content %}
+  {% endblock content %}
+</body>
+</html>

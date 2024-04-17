@@ -1,0 +1,10 @@
+1. models.py 작성 class Comment()
+2. 마이그레이션
+3. forms.py 작성 class CommentForm()
+4. views 작성 comment
+5. html 수정 (detail.html)
+6. urls.py 에서 작성 (create_comment/<int:pk>)
+7. comment 입력내용을 제출하는 로직 views 에 생성 (movie_id, comment_id 둘다 넘겨서 처리)
+
+[[ Movie - User 관계 ]]
+1. models.py 수정  models.foreignKey(settings.AUTH_USER_MODEL ~~~ 수정

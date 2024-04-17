@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3> {{ user.username }} 프로필 페이지</h3>
+
+<hr>
+{% if reviews %}
+    {% for review in reviews %}
+        <li><a href='{% url "reviews:detail" review.pk %}'>리뷰 제목: {{ review.title }}</a></li>
+    {% endfor %}
+{% else %}
+작성한 리뷰가 없습니다.
+{% endif %}
+</ol>
+
+<hr>
+<h3>작성한 리뷰 목록</h3>
+<ol>
+{% if reviews %}
+    {% for review in reviews %}
+        <li><a href='{% url "reviews:detail" review.pk %}'>리뷰 제목: {{ review.title }}</a></li>
+    {% endfor %}
+{% else %}
+작성한 리뷰가 없습니다.
+{% endif %}
+</ol>
+
+<hr>
+<h3>작성한 리뷰댓글 목록</h3>
+<ol>
+{% if comments %}
+    {% for comment in comments %}
+        <li><a href='{% url "reviews:detail" comment.review.id %}'>댓글: {{ comment.content }}</a></li>
+    {% endfor %}
+{% else %}
+작성한 리뷰 댓글이 없습니다.
+{% endif %}
+</ol>
+
+<hr>
+<h3>좋아요 목록</h3>
+<ol>
+    {% for like_review in user.like_reviews.all %}
+    <li>
+        {% comment %} <a href='{% url "reviews:detail" comment.review.id %}'> {% endcomment %}
+            {{ like_review.title }}
+        {% comment %} </a> {% endcomment %}
+    </li>
+    {% endfor %}
+{% comment %} {% else %}
+좋아요 목록이 없습니다.
+{% endif %} {% endcomment %}
+</ol>
+
+{% endblock content %}
+
+
+
