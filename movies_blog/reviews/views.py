@@ -116,3 +116,14 @@ def review_like(request, review_id):
                                                         '메모'})
     
     return redirect('reviews:index')
+
+
+# 좋아요 수를 누르면 좋아요 한 유저가 보이도록
+def review_like_users(request, review_idx):
+    review = Review.objects.get(pk=review_idx)
+    like_users = review.like_users.all()
+    context = {
+        'like_users': like_users,
+        'review': review,
+    }
+    return render(request, 'reviews/review_like_users.html', context)

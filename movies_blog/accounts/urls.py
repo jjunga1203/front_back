@@ -20,7 +20,7 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
+    path('index/<int:user_idx>', views.index, name='index'),
     path('', views.index, name='index'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
@@ -28,5 +28,5 @@ urlpatterns = [
     path('delete/', views.delete, name='delete'),
     path('update/', views.update, name='update'),
     path('profile/<str:username>', views.profile, name='profile'),
-    path('follow/<int:user_id>/', views.follow, name='follow'),
+    path('follow/<int:user_idx>/', views.follow, name='follow'),
 ]

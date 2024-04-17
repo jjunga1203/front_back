@@ -12,6 +12,12 @@
             <p><a href="{% url "reviews:detail" review_pk=review.pk %}">
                 리뷰 제목: {{review.title}} ({{review.review_comments.all|length}})</a></p>
             <p>리뷰 내용: {{review.content}}</p>
+
+            <p>좋아요 : 
+                <a href="{% url "reviews:review_like_users" review.pk %}">
+                {{ review.like_users.all | length}}</p>
+                </a>
+            {% if user.is_authenticated %}
             <form action="{% url "reviews:review_like" review_id=review.pk %}" method='POST'>
                 {% csrf_token %}
                 {% if request.user in review.like_users.all %}
@@ -20,6 +26,7 @@
                 <input type="submit" value='좋아요'>
                 {% endif %}
             </form>
+            {% endif %}
         </li>
     </ul>
     {% endfor %}

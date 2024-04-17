@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>[{{review.title}}] 리뷰 좋아요 유저 목록</h2>
+<ul>
+{% for like_user in like_users %}
+<li>{{ like_user.username }}님이 좋아요를 눌렀습니다.</li>
+
+{% endfor %}
+
+</ul>
+
+
+{% endblock content %}
+
+
+
+

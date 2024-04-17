@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect
 from .models import Movie, Comment
 from .forms import MovieForm, CommentForm
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 def index(request):
     movies = Movie.objects.all()
+    user_list = get_user_model().objects.all()
+
     content = {
-        'movies': movies
+        'movies': movies,
+        'users': user_list,
     }
     return render(request, 'movies/index.html', content)
 

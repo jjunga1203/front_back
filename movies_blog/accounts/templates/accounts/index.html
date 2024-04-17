@@ -3,8 +3,24 @@
 {% block content %}
 <h2>회원정보 페이지</h2>
 <hr>
-<h3>계정이름 : {{ user.username }} </h3>
-<h3>이메일 : {{ user.email }} </h3>
+<h3>계정이름 : {{ target_user.username }} </h3>
+<h3>이메일 : {{ target_user.email }} </h3>
+
+<hr>
+<h4>팔로워: {{ target_user.followers.all | length }}</h4>
+<h4>팔로잉: {{ target_user.followings.all | length }} </h4>
+{% if target_user != request.user %}
+<form action="{% url "accounts:follow" target_user.pk %}" method='POST'>
+    {% csrf_token %}
+    {% if request.user in target_user.followers.all %}
+        <input type="submit" value='언팔로우'>
+    {% else %}
+        <input type="submit" value='팔로우'>
+    {% endif %} 
+</form>
+{% endif %}
+
+
 <hr>
 <h3>작성한 리뷰 목록</h3>
 <ol>
@@ -30,8 +46,21 @@
 {% endif %}
 </ol>
 
+{% if user == target_user %}
+<hr>
+<h3>좋아요 목록</h3>
+<ol>
+    {% for like_review in target_user.like_reviews.all %}
+    <li>
+        {% comment %} <a href='{% url "reviews:detail" comment.review.id %}'> {% endcomment %}
+            {{ like_review.title }}
+        {% comment %} </a> {% endcomment %}
+    </li>
+    {% endfor %}
+</ol>
+{% endif %}
 
-{% if user.is_authenticated %}
+{% if user == target_user %}
 <form action="{% url "accounts:logout" %}" method="POST">
     {% csrf_token %}
     <input type="submit" value='로그아웃하기'>
@@ -45,10 +74,10 @@
     <input type="submit" value='회원정보수정'>
 </form>
 {% else %}
-<h3>로그인 후 사용하세요.</h3>
+{% comment %} <h3>로그인 후 사용하세요.</h3>
 <form action="{% url "accounts:login" %}">
     {% csrf_token %}
     <input type="submit" value='로그인하기'>
-</form>
+</form> {% endcomment %}
 {% endif %}
 {% endblock content %}

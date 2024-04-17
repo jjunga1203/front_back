@@ -6,6 +6,7 @@ from django.contrib.auth import logout as auth_logout
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from .models import User
 
 # Create your views here.
 def change_password(request, user_id):
@@ -14,7 +15,7 @@ def change_password(request, user_id):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            return redirect('accounts:index')
+            return redirect('accounts:index', request.user.id)
     else:
         form = PasswordChangeForm(request.user)
     context = {
@@ -34,7 +35,7 @@ def update(request):
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('accounts:index')
+            return redirect('accounts:index', request.user.id)
     else:
         print(request.user)
         form = CustomUserChangeForm(instance=request.user)
@@ -47,7 +48,7 @@ def update(request):
 def login(request):
     # 이미 로그인한 경우, 정보화면으로 이동
     if request.user.is_authenticated:
-        return redirect('accounts:index')
+        return redirect('accounts:index', request.user.id)
     
     # 로그인 시도
     # 세션을 생성! 하니까 POST
@@ -55,7 +56,7 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('accounts:index')
+            return redirect('accounts:index', request.user.id)
 
     form = AuthenticationForm()
     context = {
@@ -72,7 +73,7 @@ def logout(request):
 def signup(request):
     # 이미 로그인한 경우, 회원가입 로직 실행 막기
     if request.user.is_authenticated:
-        return redirect('accounts:index')
+        return redirect('accounts:index', request.user.id)
     
     if request.method == 'POST':
         # form = UserCreationForm(request.POST)
@@ -88,15 +89,16 @@ def signup(request):
     return render(request, 'accounts/signup.html', context)
 
 @login_required
-def index(request):
+def index(request, user_idx):
     if not request.user.is_authenticated:
         return redirect('accounts:login')
-    
-    reviews = request.user.reviews.all()
-    comments = request.user.review_comments.all()
+    user = User.objects.get(pk=user_idx)
+    reviews = user.reviews.all()
+    comments = user.review_comments.all()
     context = {
         'reviews': reviews,
         'comments': comments, 
+        'target_user':user,
     }
 
     return render(request, 'accounts/index.html', context)
@@ -128,12 +130,12 @@ def profile(request, username):
     return render(request, 'accounts/profile.html', context)
 
 # 팔로우 기능
-def follow(request, user_id):
-    user = get_user_model().objects.get(pk=user_id)
+def follow(request, user_idx):
+    user = get_user_model().objects.get(pk=user_idx)
 
     # 본인을 팔로우할 수 없음
     if request.user == user:
-        return redirect('accounts:profile', user.username)
+        return redirect('accounts:index', user.id)
     
     # 팔로우한 사람이라면 , 팔로우 취소
     if request.user in user.followers.all():
@@ -141,5 +143,5 @@ def follow(request, user_id):
     else:
         user.followers.add(request.user)
     
-    return redirect('accounts:profile', user.username)
+    return redirect('accounts:index', user.id)
 

@@ -17,7 +17,7 @@
         {% if user.is_authenticated %}
         <input type="button" onclick="location.href='{% url "movies:save" %}'" value='CREATE' class="btn btn-outline-secondary"/>
         <input type="button" onclick="location.href='{% url "reviews:create" %}'" value='리뷰작성' class="btn btn-outline-secondary"/>
-        <input type="button" onclick="location.href='{% url "accounts:profile" username=user.username%}'" value='PROFILE' class="btn btn-outline-secondary"/>
+        <input type="button" onclick="location.href='{% url "accounts:index" user.id%}'" value='PROFILE' class="btn btn-outline-secondary"/>
             
         <input type="button" onclick="location.href='{% url "accounts:logout" %}'" value='LOGOUT' class="btn btn-outline-secondary"/>
         {% else %}

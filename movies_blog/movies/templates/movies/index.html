@@ -24,6 +24,16 @@
 
 </ul>
 <hr>
+<h3>현재 User 목록 ( {{users|length}} )</h3>
+<ul>
+    {% if users %}
+    {% for user in users  %}
+        <li><a href="{% url "accounts:index" user.pk %}">
+            {{user.username}}</a></li>
+    {% endfor %}
+    {% endif %}
+</ul>
+<hr>
 {% comment %} <p><a href='{% url "movies:create_new" %}' 
     class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">[영화 추가]</a></p> {% endcomment %}
 {% endblock content %}
