@@ -12,6 +12,11 @@ class Review(models.Model):
     movie_title = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     content = models.TextField()
+
+    # 이미지 컬럼 추가
+    imgfile = models.ImageField(null=True, upload_to='UploadedFiles/%y/%m/%d/', blank=True)
+    # img_uploaded_at = models.DateTimeField(auto_now = True)
+    
     # content2 = models.TextField()
 
 # 리뷰에 좋아요 기능을 넣기 위한 모델 생성

@@ -23,6 +23,7 @@ urlpatterns = [
     path('movies/', views.index, name='index'),
     path('', views.index, name='index'),
     path('create_new/', views.create_new, name='create_new'),
+    path('img_upload/', views.img_upload, name='img_upload'),
     path('save/', views.save, name='save'),
     # path('create_movie/', views.create_movie, name='create_movie'),
     path('movie_info/<int:movie_pk>', views.movie_info, name='movie_info'),

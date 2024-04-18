@@ -10,6 +10,17 @@
 <p>리뷰 작성 시간 : {{ form.created_at }}</p>
 <p>최근 리뷰 업데이트 시간 : {{ form.updated_at }}</p>
 
+{% comment %} http://localhost:8000/media/image_wijoVEu.png {% endcomment %}
+
+{% if form.imgfile %}
+<div class="container border col-10">
+    <div style="width:10%; height:150px; float:left; margin-right:10px;">
+        <p>{{form.imgfile.url}}</p>
+        <img src="{{ form.imgfile.url }}" width="700">
+    </div>
+</div>
+{% endif %}
+
 {% if form.user == request.user %}
 <hr>
 <a href="{% url "reviews:edit" review_pk=form.pk %}">[EDIT]</a>

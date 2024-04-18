@@ -7,15 +7,16 @@
 <h3>이메일 : {{ target_user.email }} </h3>
 
 <hr>
-<h4>팔로워: {{ target_user.followers.all | length }}</h4>
-<h4>팔로잉: {{ target_user.followings.all | length }} </h4>
+<h4>팔로워: <span id='follower-cnt'>{{ target_user.followers.all | length }}</span></h4>
+<h4>팔로잉: <span id='following-cnt'>{{ target_user.followings.all | length }}</span></h4>
 {% if target_user != request.user %}
-<form action="{% url "accounts:follow" target_user.pk %}" method='POST'>
+{% comment %} <form action="{% url "accounts:follow" target_user.pk %}" method='POST'> {% endcomment %}
+<form id='follow-form' action="{% url "accounts:follow" target_user.pk %}" >
     {% csrf_token %}
     {% if request.user in target_user.followers.all %}
-        <input type="submit" value='언팔로우'>
+        <input id='submit-input' type="submit" value='언팔로우'>
     {% else %}
-        <input type="submit" value='팔로우'>
+        <input id='submit-input' type="submit" value='팔로우'>
     {% endif %} 
 </form>
 {% endif %}
@@ -73,11 +74,12 @@
     {% csrf_token %}
     <input type="submit" value='회원정보수정'>
 </form>
-{% else %}
-{% comment %} <h3>로그인 후 사용하세요.</h3>
-<form action="{% url "accounts:login" %}">
-    {% csrf_token %}
-    <input type="submit" value='로그인하기'>
-</form> {% endcomment %}
 {% endif %}
 {% endblock content %}
+
+{% block script %}
+{% load static %}
+<script src="{% static 'js/accounts/index.js' %}"></script>
+{% endblock script %}
+
+

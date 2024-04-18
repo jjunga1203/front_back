@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Review, Review_Comment
 from .forms import ReviewForm, Review_CommentForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -28,7 +29,8 @@ def create(request):
     
     # 신규리뷰 저장
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        print(request.FILES)
+        form = ReviewForm(request.POST, request.FILES)  # 이미지 업로드 로 수정함.
         
         if form.is_valid():
             review = form.save(commit=False)
@@ -111,11 +113,20 @@ def review_like(request, review_id):
     # 이미 좋아요 했다면 좋아요를 취소하도록 함.
     if request.user in review.like_users.all():
         review.like_users.remove(request.user)
+        is_liked = False
     else:
         review.like_users.add(request.user, through_defaults={'memo':
                                                         '메모'})
-    
-    return redirect('reviews:index')
+        is_liked = True
+
+    context = {
+        'is_liked': is_liked,
+        'review_id': review.pk,
+        'like_cnt': review.like_users.count()
+    }
+
+    return JsonResponse(context)
+    # return redirect('reviews:index')
 
 
 # 좋아요 수를 누르면 좋아요 한 유저가 보이도록

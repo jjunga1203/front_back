@@ -5,7 +5,7 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
 
-        fields = ("movie_title", "title", "content")
+        fields = ("movie_title", "title", "content", 'imgfile')
 
         widgets = {
             'movie_title':forms.TextInput(attrs={'placeholder':'영화 제목', 'class': 'movie-title'}),
@@ -15,7 +15,8 @@ class ReviewForm(forms.ModelForm):
         labels = {
             'movie_title': '영화 제목',
             'title': '리뷰 제목',
-            'content': '리뷰 내용'
+            'content': '리뷰 내용',
+            'imgfile': '이 미 지',
         }
 
 

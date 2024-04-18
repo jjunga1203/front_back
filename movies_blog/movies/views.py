@@ -149,3 +149,8 @@ def delete_comment(request, movie_id, comment_id):
     if request.user == comment.user:
         comment.delete()
     return redirect('movies:movie_info', movie_id)
+
+
+# 임시 테스트
+def img_upload(request):
+    return render(request, 'movies/img_upload.html')

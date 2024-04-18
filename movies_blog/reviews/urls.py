@@ -1,5 +1,8 @@
 
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
+
 from . import views
 app_name = 'reviews'
 
@@ -15,3 +18,7 @@ urlpatterns = [
     path('<int:review_id>/comments/<int:comment_id>/delete', views.delete_comment, name='delete_comment'),
     path('review_like_users/<int:review_idx>', views.review_like_users, name='review_like_users'),
 ]
+
+# 이미지업로드 로직을 위하여 추가
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media 경로 추가
+

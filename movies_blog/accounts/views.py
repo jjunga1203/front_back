@@ -7,6 +7,7 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .models import User
+from django.http import JsonResponse
 
 # Create your views here.
 def change_password(request, user_id):
@@ -137,11 +138,22 @@ def follow(request, user_idx):
     if request.user == user:
         return redirect('accounts:index', user.id)
     
-    # 팔로우한 사람이라면 , 팔로우 취소
-    if request.user in user.followers.all():
+    # 팔로우한 사람이라면 , 팔로우 취소 
+    # axios 이용한 코드로 변경
+    if user.followers.filter(pk=request.user.id).exists():
         user.followers.remove(request.user)
+        is_followed = False
     else:
         user.followers.add(request.user)
+        is_followed = True
     
-    return redirect('accounts:index', user.id)
+    # 팔로우 성공을 JSON 형태로 반환
+    context = {
+        'is_followed': is_followed,
+        'following_cnt': user.followings.count(),
+        'follower_cnt': user.followers.count(),
+    }
+    
+    # return redirect('accounts:index', user.id)
+    return JsonResponse(context)
 
